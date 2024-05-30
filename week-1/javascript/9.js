@@ -3,3 +3,18 @@
  * @param {number} num The number to check.
  * @throws {Error} If the number is not a positive integer.
  */
+
+function num(number){
+
+    if(number < 0) {
+        throw new Error('The number is not a positive integer.')
+    }
+    return number;
+};
+
+try {
+    let checkNumber = num(-2);
+    console.log(checkNumber);
+} catch(error) {
+    console.log(error.message);
+};
