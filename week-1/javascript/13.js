@@ -6,3 +6,12 @@
  * Example string: "The quick brown fox jumps over the lazy dog"
  * Expected output: "The Quick Brown Fox Jumps Over The Lazy Dog"
  */
+
+
+function firstLetterCapitalization(str){
+    return str.replace(/\b\w/g, (match) => match.toUpperCase());
+}
+
+let input = "the quick brown fox jumps over the lazy dog.";
+const output = firstLetterCapitalization(input);
+console.log(output);
