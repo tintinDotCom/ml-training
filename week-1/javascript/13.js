@@ -12,6 +12,4 @@ function firstLetterCapitalization(str){
     return (str.replace(/\b\w/g, (match) => match.toUpperCase()));
 }
 
-let input = "the quick brown fox jumps over the lazy dog.";
-const output = firstLetterCapitalization(input);
-console.log(output);
+console.log(firstLetterCapitalization("the quick brown fox jumps over the lazy dog."))
