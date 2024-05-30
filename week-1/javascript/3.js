@@ -13,14 +13,17 @@ function multiplesBy(number) {
         if(x %3 === 0 && x %5 === 0){
             console.log("FizzBuzz")
         }
-        if(x %3 === 0){
+        else if(x %3 === 0){
             console.log("Fizz")
         }
-        if(x %5 === 0){
+        else if(x %5 === 0){
             console.log("Buzz")
+        }
+        else {
+            console.log(x)
         }
         
     }
 }
 
-multiplesBy(15);
+multiplesBy(30);
