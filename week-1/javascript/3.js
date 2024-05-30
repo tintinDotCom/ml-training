@@ -5,3 +5,22 @@
  * For numbers which are multiples of both three and five print 'FizzBuzz'.
  * @param {number} n The number to print.
  */
+
+
+function multiplesBy(number) {
+    for(let x = 0; x <= number ; x++){
+
+        if(x %3 === 0 && x %5 === 0){
+            console.log("FizzBuzz")
+        }
+        if(x %3 === 0){
+            console.log("Fizz")
+        }
+        if(x %5 === 0){
+            console.log("Buzz")
+        }
+        
+    }
+}
+
+multiplesBy(15);
