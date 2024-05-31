@@ -48,8 +48,6 @@ function validatePassword(password){
             return('Password must contain atleast one special character.')
         }
 
-
-
         return('Password is valid')
     }
 
