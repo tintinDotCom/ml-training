@@ -7,3 +7,17 @@
  * @param {string} str
  * @returns {string}
  */
+
+
+function swapCase(str){
+    let newTxt = '';
+
+    for (let index = 0; index < str.length; index++) {
+        newTxt += str[index] === str[index].toUpperCase() ? str[index].toLowerCase() : str[index].toUpperCase()
+    }
+
+
+    return newTxt;
+}
+
+console.log(swapCase("the QUICK brown FOx"));
