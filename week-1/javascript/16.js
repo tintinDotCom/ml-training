@@ -8,10 +8,10 @@
  *
  * Grade computed as follows:
  * < 60 : F
- * 60-70 : D
- * 70-80 : C
- * 80-90 : B
- * > 90 : A
+ * 60-69 : D
+ * 70-79 : C
+ * 80-89 : B
+ * >= 90 : A
  * @return {number} The average marks of the students.
  */
 
@@ -21,7 +21,7 @@ function average(){
     { name: "John", mark: 90 },
     { name: "Jane", mark: 85 },
     { name: "Joe", mark: 95 },
-    { name: "Tom", mark: 65 },
+    { name: "Tom", mark: 95 },
     { name: "Nancy", mark: 75 },
   ];
 
@@ -32,17 +32,17 @@ function average(){
 
   if (averageMarks < 60){
     grade = 'F';
-  } else if (averageMarks >= 60 && averageMarks < 70 ){
+  } else if (averageMarks >= 60 && averageMarks <= 69 ){
     grade = 'D';
-  } else if (averageMarks >= 70 && averageMarks < 80){
+  } else if (averageMarks >= 70 && averageMarks <= 79){
     grade = 'C';
-  } else if (averageMarks >= 80 && averageMarks < 90){
+  } else if (averageMarks >= 80 && averageMarks <= 89){
     grade = 'B';
   } else {
     grade = 'A'
   }
 
-  return (`Average Mark: ${averageMarks} \n  Grade: ${grade}`)
+  return (`Average Mark: ${averageMarks} \nGrade: ${grade}`)
 }
 
 
