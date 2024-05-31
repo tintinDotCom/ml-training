@@ -16,7 +16,7 @@
  */
 
 
-function average(){
+function average() {
   const students = [
     { name: "John", mark: 90 },
     { name: "Jane", mark: 85 },
@@ -25,26 +25,21 @@ function average(){
     { name: "Nancy", mark: 75 },
   ];
 
-
-  const totalMarks = students.reduce((sum,student) => sum + student.mark, 0);
-  const averageMarks = totalMarks / students.length;
-  let grade = '';
-
-  if (averageMarks < 60){
-    grade = 'F';
-  } else if (averageMarks >= 60 && averageMarks <= 69 ){
-    grade = 'D';
-  } else if (averageMarks >= 70 && averageMarks <= 79){
-    grade = 'C';
-  } else if (averageMarks >= 80 && averageMarks <= 89){
-    grade = 'B';
-  } else {
-    grade = 'A'
+  for (let student of students) {
+    let grade;
+    if (student.mark < 60) {
+      grade = 'F';
+    } else if (student.mark >= 60 && student.mark <= 69) {
+      grade = 'D';
+    } else if (student.mark >= 70 && student.mark <= 79) {
+      grade = 'C';
+    } else if (student.mark >= 80 && student.mark <= 89) {
+      grade = 'B';
+    } else {
+      grade = 'A';
+    }
+    console.log(`Name: ${student.name}\nMark: ${student.mark}\nGrade: ${grade}\n`);
   }
-
-  return (`Average Mark: ${averageMarks} \nGrade: ${grade}`)
 }
 
-
-const result = average();
-console.log(`${result}`)
+average();
