@@ -25,6 +25,7 @@ function average() {
     { name: "Nancy", mark: 75 },
   ];
 
+  
   for (let student of students) {
     let grade;
     if (student.mark < 60) {
