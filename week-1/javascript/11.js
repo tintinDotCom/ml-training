@@ -12,3 +12,13 @@ const entities = {
   '"': "&quot;",
   "'": "&apos;",
 };
+
+function convertEntity(str){
+  return str.replace(/&lt;/g, `<`)
+            .replace(/&amp;/g, `&`)
+            .replace(/&gt;/g, `>`)
+            .replace(/&quot;/g, `"`)
+            .replace(/&apos;/g, `'`);
+}
+
+console.log(convertEntity("&lt; &amp; &gt; &quot; &apos;"));
