@@ -19,3 +19,37 @@
  * @param {string} password
  * @returns {string}
  */
+function ValidatePassword(password : string) : string{
+
+    const oneUppercaseFormat : RegExp = /[A-Z]/;
+    const oneLowercaseFormat : RegExp = /[a-z]/;
+    const oneNumberFormat: RegExp = /\d/;
+    const oneSpecialCharacFormat : RegExp = /~!`@#$%^&*()-_+={}[]|;:"<>,.?/
+
+        if (password.length < 8) {
+            return("Password must be atleast 8 characters long.")
+        }
+
+        if (!oneUppercaseFormat.test(password)){
+            return('Password must contain atleast one uppercase letter.')
+        }
+
+        if(!oneLowercaseFormat.test(password)){
+            return('Password must contain atleast one uppercase letter.')
+        }
+
+        if (!oneNumberFormat.test(password)){
+            return('Password must contain atleast one number.')
+        }
+        
+        if (!oneSpecialCharacFormat.test(password)){
+            return('Password must contain atleast one special character.')
+        }
+
+        return('Password is valid')
+    }
+
+
+
+
+console.log(ValidatePassword("Ocana0667"))
