@@ -6,3 +6,9 @@
  * Example string: "The quick brown fox jumps over the lazy dog"
  * Expected output: "The Quick Brown Fox Jumps Over The Lazy Dog"
  */
+function firstLetterCaptil(str : string): string{
+    return (str.replace(/\b\w/g, (match) => match.toUpperCase()));
+}
+console.log('====================================');
+console.log(firstLetterCaptil('The quick brown fox'));
+console.log('====================================');
