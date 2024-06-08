@@ -1,91 +1,74 @@
+import { PrismaService } from 'src/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
+import { Product } from '@prisma/client';
 import { Prisma } from '@prisma/client';
-import { PrismaService } from 'src/prisma/prisma.service';
+import { contains } from 'class-validator';
 
 @Injectable()
 export class ProductsService {
   constructor(private readonly prisma: PrismaService) {}
-  async findByType(query: CreateProductDto) {
-    const { productType } = query;
-    let where: Prisma.ProductsWhereInput = {};
+  async create(createProductDto: CreateProductDto): Promise<Product> {
+    const { name, type, price, stock } = createProductDto;
 
-    if (productType) {
-      where = {
-        productType: {
-          contains: productType,
-        },
-      };
-    }
+    // Check if the product already exists
+    const existingProduct = await this.prisma.product.findUnique({
+      where: {
+        name,
+      },
+    });
 
-    return await this.prisma.products.findMany({ where });
-  }
-  async create(createProductDto: CreateProductDto) {
-    try {
-      const existingProduct = await this.prisma.products.findFirst({
+    if (existingProduct) {
+      // Update the existing product's stock
+      return this.prisma.product.update({
         where: {
-          productName: createProductDto.productName,
+          id: existingProduct.id,
+        },
+        data: {
+          stock: {
+            increment: stock || 1,
+          },
+          price,
         },
       });
-
-      if (existingProduct) {
-        return this.prisma.products.update({
-          where: {
-            productId: existingProduct.productId,
-          },
-          data: {
-            unitPrice: createProductDto.unitPrice,
-          },
-        });
-      } else {
-        return this.prisma.products.create({
-          data: {
-            productName: createProductDto.productName,
-            productType: createProductDto.productType,
-            unitPrice: createProductDto.unitPrice,
-          },
-        });
-      }
-    } catch (error) {
-      throw error;
+    } else {
+      // Create a new product
+      return this.prisma.product.create({
+        data: {
+          name,
+          type,
+          price,
+          stock: 1,
+        },
+      });
     }
   }
+  findAll() {
+    return this.prisma.product.findMany();
+  }
 
-  // findAll() {
-  //   return this.prisma.products.findMany();
-  // }
-
-  findItemById(productId: number) {
-    return this.prisma.products.findUnique({
+  findOne(id: number) {
+    return this.prisma.product.findUnique({
       where: {
-        productId,
+        id,
       },
     });
   }
 
-  async update(productId: number, updateProductsDto: UpdateProductDto) {
-    try {
-      const updatedProduct = await this.prisma.products.update({
-        where: {
-          productId,
-        },
-        data: {
-          productName: updateProductsDto.productName,
-          productType: updateProductsDto.productType,
-        },
-      });
-
-      return updatedProduct;
-    } catch (error) {
-      throw error;
-    }
+  update(id: number, updateProductDto: UpdateProductDto) {
+    return this.prisma.product.update({
+      where: {
+        id,
+      },
+      data: updateProductDto,
+    });
   }
 
-  remove(productId: number) {
-    return this.prisma.products.delete({
+  remove(id: number) {
+    return this.prisma.product.delete({
       where: {
-        productId,
+        id,
       },
     });
   }

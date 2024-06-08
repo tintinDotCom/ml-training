@@ -13,22 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Products {
-  productId   Int      @id @default(autoincrement())
-  productName String
-  productType String
-  unitPrice   Float
-  lastUpdated DateTime @updatedAt
-
-  Inventory Inventory[]
-}
-
-model Inventory {
-  inventoryId  Int      @id @default(autoincrement())
-  productId    Int
-  productName  String
-  productType  String
-  unitQuantity Int
-  lastUpdated  DateTime @updatedAt
-  product      Products @relation(fields: [productId], references: [productId])
+model Product {
+  id        Int      @id @default(autoincrement())
+  name      String   @unique
+  type      String?
+  price     Decimal  @db.Decimal(10, 2)
+  stock     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

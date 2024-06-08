@@ -1,5 +1,8 @@
+import { Decimal } from '@prisma/client/runtime/library';
+
 export class CreateProductDto {
-  productName: string;
-  productType: string;
-  unitPrice: number;
+  name: string;
+  type?: string;
+  price: Decimal;
+  stock?: number;
 }
