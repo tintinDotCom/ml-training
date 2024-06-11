@@ -1,18 +1,27 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { UsersService } from './users.service';
+import { DatabaseService } from 'src/database/database.service';
+import { Injectable } from '@nestjs/common';
+import * as bcrypt from 'bcrypt';
 
-describe('UsersService', () => {
-  let service: UsersService;
+@Injectable()
+export class UsersService {
+  constructor(private prisma: DatabaseService) {}
 
-  beforeEach(async () => {
-    const module: TestingModule = await Test.createTestingModule({
-      providers: [UsersService],
-    }).compile();
+  async findOneByEmail(email: string) {
+    return this.prisma.users.findUnique({ where: { email } });
+  }
 
-    service = module.get<UsersService>(UsersService);
-  });
+  async findOneById(id: number) {
+    return this.prisma.users.findUnique({ where: { id } });
+  }
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-});
+  async create(user: { email: string; password: string; name: string }) {
+    const hashedPassword = await bcrypt.hash(user.password, 10);
+    return this.prisma.users.create({
+      data: {
+        email: user.email,
+        password: hashedPassword,
+        name: user.name,
+      },
+    });
+  }
+}
