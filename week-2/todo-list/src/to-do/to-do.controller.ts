@@ -6,10 +6,11 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
 } from '@nestjs/common';
 import { ToDoService } from './to-do.service';
-import { UpdateToDoDto } from './dto/update-to-do.dto';
 import { CreateToDoDto } from './dto/create-to-do.dto';
+import { UpdateToDoDto } from './dto/update-to-do.dto';
 
 @Controller('to-do')
 export class ToDoController {
@@ -26,17 +27,22 @@ export class ToDoController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number) {
+  findOne(@Param('id') id: string) {
     return this.toDoService.findOne(id);
   }
 
   @Patch(':id')
-  update(@Param('id') id: number, @Body() updateToDoDto: UpdateToDoDto) {
+  update(@Param('id') id: string, @Body() updateToDoDto: UpdateToDoDto) {
     return this.toDoService.update(id, updateToDoDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.toDoService.remove(+id);
+    return this.toDoService.remove(id);
   }
+
+  // @Get('search')
+  // async search(@Query('title') title: string) {
+  //   return this.toDoService.search(title);
+  // }
 }

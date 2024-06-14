@@ -11,7 +11,7 @@ async function bootstrap() {
       secret: 'SECRET_KEY',
       resave: false,
       saveUninitialized: false,
-      cookie: { maxAge: 3600000 }, // 1 hour
+      cookie: { maxAge: 3600000 },
     }),
   );
 
