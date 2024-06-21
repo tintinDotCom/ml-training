@@ -6,20 +6,8 @@ import { CreateToDoDto } from './dto/create-to-do.dto';
 @Injectable()
 export class ToDoService {
   constructor(private readonly databaseService: DatabaseService) {}
-  async create(createToDoDto: CreateToDoDto) {
-    // if (
-    //   typeof createToDoDto.title !== 'string' ||
-    //   createToDoDto.title.trim() === ''
-    // ) {
-    //   return 'Title must not be empty';
-    // }
-    // if (
-    //   typeof createToDoDto.description !== 'string' ||
-    //   createToDoDto.description.trim() === ''
-    // ) {
-    //   return 'Description must not be empty';
-    // }
 
+  async create(createToDoDto: CreateToDoDto) {
     return this.databaseService.toDo.create({
       data: {
         title: createToDoDto.title,
@@ -38,27 +26,42 @@ export class ToDoService {
     });
   }
 
-  async findOne(id: number) {
-    return this.databaseService.toDo.findUnique({
-      where: {
-        id,
-      },
-    });
+  async findOne(idOrTitle: string) {
+    // Check if idOrTitle can be parsed into an integer
+    const intId = parseInt(idOrTitle, 10);
+    if (!isNaN(intId)) {
+      // If intId is a valid number, perform ID lookup
+      return this.databaseService.toDo.findUnique({
+        where: {
+          id: intId,
+        },
+      });
+    } else {
+      // Otherwise, treat it as a title search
+      return this.databaseService.toDo.findMany({
+        where: {
+          title: {
+            contains: idOrTitle,
+            mode: 'insensitive',
+          },
+        },
+      });
+    }
   }
 
-  async update(id: number, updateToDoDto: UpdateToDoDto) {
+  async update(id: string, updateToDoDto: UpdateToDoDto) {
     return this.databaseService.toDo.update({
       where: {
-        id,
+        id: parseInt(id, 10),
       },
       data: updateToDoDto,
     });
   }
 
-  async remove(id: number) {
+  async remove(id: string) {
     return this.databaseService.toDo.delete({
       where: {
-        id,
+        id: parseInt(id, 10),
       },
     });
   }
